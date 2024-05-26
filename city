@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>视频播放</title>
+  <style>
+    #videoPlayer {
+      width: 640px;
+      height: 360px;
+    }
+  </style>
+</head>
+<body>
+  <div id="videoPlayer"></div>
+  <div id="message"></div>
+
+  <script>
+    // 设置指定的时刻（小时和分钟）
+    var targetHour = 18;
+    var targetMinute = 30;
+
+    // 视频列表
+    var videoList = [
+      {
+        title: "视频1",
+        src: "video1.mp4"
+      },
+      {
+        title: "视频2",
+        src: "video2.mp4"
+      },
+      {
+        title: "视频3",
+        src: "video3.mp4"
+      }
+    ];
+
+    // 获取当前时间
+    var now = new Date();
+    var currentHour = now.getHours();
+    var currentMinute = now.getMinutes();
+
+    // 检查是否达到指定时刻
+    if (currentHour === targetHour && currentMinute >= targetMinute) {
+      // 从视频列表中随机选择一个视频
+      var randomIndex = Math.floor(Math.random() * videoList.length);
+      var selectedVideo = videoList[randomIndex];
+
+      // 创建视频元素并开始播放
+      var videoPlayer = document.getElementById("videoPlayer");
+      videoPlayer.innerHTML = "<video controls autoplay><source src='" + selectedVideo.src + "' type='video/mp4'></video>";
+    } else {
+      // 显示当前时间和说明文字
+      var messageDiv = document.getElementById("message");
+      messageDiv.innerHTML = "当前时间：" + currentHour + ":" + currentMinute + "<br>请等待指定时刻播放视频。";
+    }
+  </script>
+</body>
+</html>
