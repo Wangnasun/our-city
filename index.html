@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,11 +15,6 @@
   <div id="message"></div>
 
   <script>
-    // 设置指定的时刻（小时和分钟）
-    var targetHour = 5;
-    var targetMinute = 23;
-    var targetSecond = 0;
-
     // 视频列表
     var videoList = [
       {
@@ -27,26 +23,92 @@
       }
     ];
 
-    // 获取当前时间
-    var now = new Date();
-    var currentHour = now.getHours();
-    var currentMinute = now.getMinutes();
-    var currentSecond = now.getSeconds();
+    // 从视频列表中随机选择一个视频
+    var randomIndex = Math.floor(Math.random() * videoList.length);
+    var selectedVideo = videoList[randomIndex];
 
-    // 检查是否达到指定时刻
-    if (currentHour === targetHour && currentMinute >= targetMinute) {
-      // 从视频列表中随机选择一个视频
-      var randomIndex = Math.floor(Math.random() * videoList.length);
-      var selectedVideo = videoList[randomIndex];
+    // 创建视频元素并设置属性
+    var videoPlayer = document.createElement("video");
+    videoPlayer.id = "videoPlayer";
+    videoPlayer.src = selectedVideo.src;
+    videoPlayer.controls = true;
+    videoPlayer.style.display = "none";
+    document.getElementById("videoPlayer").appendChild(videoPlayer);
 
-      // 创建视频元素并开始播放
-      var videoPlayer = document.getElementById("videoPlayer");
-      videoPlayer.innerHTML = "<video controls autoplay><source src='" + selectedVideo.src + "' type='video/mp4'></video>";
+    // 检查视频加载状态和播放时间
+    function checkVideoLoad() {
+      // 检查视频是否已经加载完成
+      if (videoPlayer.readyState === 4) { // readyState为4表示视频已加载完成
+        // 设置指定的时刻（小时和分钟）
+        var targetHour = 5;
+        var targetMinute = 23;
+        var targetSecond = 0;
+
+        // 获取当前时间
+        var now = new Date();
+        var currentHour = now.getHours();
+        var currentMinute = now.getMinutes();
+        var currentSecond = now.getSeconds();
+
+        // 检查是否到达指定时间
+        if (currentHour >= targetHour && currentMinute >= targetMinute && currentSecond >= targetSecond) {
+          // 将视频设置为可见并开始播放
+          videoPlayer.style.display = "block";
+          videoPlayer.play();
+        }
+      } else {
+        // 视频尚未加载完成，继续检查加载状态
+        setTimeout(checkVideoLoad, 1000); // 每隔1秒检查一次
+      }
+    }
+
+    // 页面加载时开始预加载视频
+    window.onload = function() {
+      // 检查视频加载状态和播放时间
+      checkVideoLoad();
+    };
+
+// 将已播放视频标记存储到本地
+        localStorage.setItem("hasPlayedVideo", true);
+  } else {
+  // 显示文字说明
+        var messageDiv = document.getElementById("message");
+        messageDiv.innerHTML = "已抵达指定时间2，请等待切换到文字说明页面。";
+      }
+    }
+    // 检查是否达到指定时间2
+    else if (currentHour === targetHour2 && currentMinute >= targetMinute2) {
+      // 检查是否已经切换到文字说明页面
+      var hasSwitchedToTextPage = localStorage.getItem("hasSwitchedToTextPage");
+
+      if (!hasSwitchedToTextPage) {
+        // 显示文字说明
+        var messageDiv = document.getElementById("message");
+        messageDiv.innerHTML = "已抵达指定时间2，切换到文字说明页面。";
+
+        // 将切换到文字说明页面的标记存储到本地
+        localStorage.setItem("hasSwitchedToTextPage", true);
+
+        // 清除已播放视频的标记
+        localStorage.removeItem("hasPlayedVideo");
+
+        // 移除视频播放器
+        var videoPlayer = document.getElementById("videoPlayer");
+        videoPlayer.innerHTML = "";
+      }
+    }
     } else {
       // 显示当前时间和说明文字
       var messageDiv = document.getElementById("message");
-      messageDiv.innerHTML = "当前时间：" + currentHour + ":" + currentMinute + "<br>请等待指定时刻播放视频。";
+      messageDiv.innerHTML = "当前时间：" + currentHour + ":" + currentMinute + ":" + currentSecond""<br>请等待指定时刻播放视频。";
     }
+// 清除已播放视频和切换到文字说明页面的标记
+      localStorage.removeItem("hasPlayedVideo");
+      localStorage.removeItem("hasSwitchedToTextPage");
+
+      // 移除视频播放器
+      var videoPlayer = document.getElementById("videoPlayer");
+      videoPlayer.innerHTML = "";
   </script>
 </body>
 </html>
