@@ -31,15 +31,12 @@
       playVideo();
     }
 
-    // 预加载视频
-    function preloadVideo(videoIndex) {
-      var videoUrl = videoList[videoIndex];
-      var videoPlayer = document.createElement("video");
-      videoPlayer.src = videoUrl;
-      videoPlayer.preload = "auto";
-      videoPlayer.style.display = "none";
-      document.body.appendChild(videoPlayer);
-    }
+    // 页面加载时开始预加载视频
+window.addEventListener("load",function(){
+var videoPlayer = document.getElementById("videoPlayer");
+videoPlayer.src = videoList[selectedVideoIndex];
+videoPlayer.load();
+});
 
     // 播放视频
     function playVideo() {
