@@ -17,6 +17,7 @@
     // 设置指定的时刻（小时和分钟）
     var targetHour = 5;
     var targetMinute = 23;
+    var targetSecond = 0;
 
     // 视频列表
     var videoList = [
@@ -30,6 +31,7 @@
     var now = new Date();
     var currentHour = now.getHours();
     var currentMinute = now.getMinutes();
+    var currentSecond = now.getSeconds();
 
     // 检查是否达到指定时刻
     if (currentHour === targetHour && currentMinute >= targetMinute) {
