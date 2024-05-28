@@ -4,7 +4,7 @@
   <title>视频播放网页</title>
   <script>
     // 视频列表
-    var videoList = ["freecompress-brt门口+1.mp4"];
+    var videoList = ["freecompress-brt门口+1.mp4","freecompress-写字3+7.mp4"];
     var totalVideos = videoList.length;
 
     // 当前时间
@@ -14,8 +14,8 @@
     var currentSecond = now.getSeconds();
 
     // 指定时间
-    var targetHour = 14;
-    var targetMinute = 9;
+    var targetHour = 16;
+    var targetMinute = 48;
     var targetSecond = 0;
 
     if (currentHour < targetHour || (currentHour === targetHour && currentMinute < targetMinute) || (currentHour === targetHour && currentMinute === targetMinute && currentSecond < targetSecond)) {
