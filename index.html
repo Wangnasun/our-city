@@ -1,71 +1,105 @@
+
 <!DOCTYPE html>
 <html>
 <head>
-  <title>视频播放网页</title>
-  <script>
-    // 视频列表
-    var videoList = ["freecompress-brt门口+1.mp4","freecompress-写字3+7.mp4"];
-    var totalVideos = videoList.length;
-
-    // 当前时间
-    var now = new Date();
-    var currentHour = now.getHours();
-    var currentMinute = now.getMinutes();
-    var currentSecond = now.getSeconds();
-
-    // 指定时间
-    var targetHour = 16;
-    var targetMinute = 48;
-    var targetSecond = 0;
-
-    if (currentHour < targetHour || (currentHour === targetHour && currentMinute < targetMinute) || (currentHour === targetHour && currentMinute === targetMinute && currentSecond < targetSecond)) {
-      // 未抵达指定时间，显示当前时间和说明文字
-      var messageDiv = document.getElementById("message");
-      messageDiv.innerHTML = "当前时间：" + currentHour + ":" + currentMinute + ":" + currentSecond + "<br>请等待指定时间开始播放视频。";
-
-      // 随机选择一个视频进行预加载
-      var selectedVideoIndex = Math.floor(Math.random() * totalVideos);
-      preloadVideo(selectedVideoIndex);
-    } else {
-      // 抵达指定时间，播放视频
-      playVideo();
-    }
-
-    // 页面加载时开始预加载视频
-window.addEventListener("load",function(){
-var videoPlayer = document.getElementById("videoPlayer");
-videoPlayer.src = videoList[selectedVideoIndex];
-videoPlayer.load();
-});
-
-    // 播放视频
-    function playVideo() {
-      // 移除之前预加载的视频
-      var videoPlayer = document.querySelector("video");
-      if (videoPlayer) {
-        videoPlayer.parentNode.removeChild(videoPlayer);
-      }
-
-      // 显示视频播放器并开始播放
-      var videoPlayerDiv = document.getElementById("videoPlayerDiv");
-      videoPlayerDiv.style.display = "block";
-      var videoPlayer = document.createElement("video");
-      videoPlayer.src = videoList[0];
-      videoPlayer.controls = true;
-      videoPlayer.autoplay = true;
-      videoPlayer.addEventListener("ended", function() {
-        // 视频播放完毕后重新显示当前时间和说明文字
-        videoPlayerDiv.style.display = "none";
-        var messageDiv = document.getElementById("message");
-        messageDiv.innerHTML = "当前时间：" + currentHour + ":" + currentMinute + ":" + currentSecond + "<br>视频已播放完毕。";
-      });
-      videoPlayerDiv.appendChild(videoPlayer);
-    }
-  </script>
+  <title>视频播放</title>
 </head>
 <body>
-  <h1>视频播放网页</h1>
-  <div id="message"></div>
-  <div id="videoPlayerDiv" style="display: none;"></div>
+ <div id="video-container" style="display: none;">
+    <video id="my-video" controls></video>
+  </div>
+  <div id="countdown-container">
+      <p id="countdown-text"></p>
+<p id="description-text">你好，市民！</p>
+<p id="description-text">Hi citizen!</p>
+<p id="description-text">请摘下耳机并调高设备音量，从而获得更好的体验！</p>
+<p id="description-text">Please remove your headphones and turn up the volume of your device for a better experience! </p>
+<p id="description-text">请保持网络通畅，在开始前预留一定时间用于影像的预加载！</p>
+<p id="description-text">Please keep your internet connection open and allow some time for image preloading before the beginning! </p>
+<p id="description-text">当倒计时结束，请即刻点击播放并将影片全屏。</p>
+<p id="description-text">When the countdown is over, please click play immediately and take the movie full screen.</p>
+<p id="description-text">播放过程中，你可以对其他参与者展示自己手中的影像，并观赏其他人展示的影像，以体验完整的项目。</p>
+<p id="description-text">During the playback, it is encouraged to show the movie in your hand to other participants. At the same time, you can watch other people show their films and experience the full program. </p>
+<p id="description-text">感谢你对这座城市运行的参与！</p>
+<p id="description-text">Thank you for participating in the running of this city!</p>
+
+
+    </div>
+  
+  <script>
+    // 定义视频列表（示例视频URL）
+    var videoList = [
+      {src:"freecompress-brt门口+1.mp4",
+       type:"video/mp4"
+      },
+      {
+        src: "freecompress-扶梯+4.mp4",
+        type: "video/mp4"
+      },
+      {
+        src: "freecompress-工地1+5.mp4",
+        type: "video/mp4"
+      },
+     {
+        src: "freecompress-红灯-标+6.mp4",
+        type: "video/mp4"
+      },
+         {
+        src: "freecompress-写字3+7.mp4",
+        type: "video/mp4"
+      },
+ {
+        src: "freecompress-夜闪楼+3.mp4",
+        type: "video/mp4"
+      },
+ {
+        src: "freecompress-车流+2.mp4",
+        type: "video/mp4"
+      }
+    ];
+    
+    // 随机播放视频
+    function playRandomVideo() {
+      var videoIndex = Math.floor(Math.random() * videoList.length); // 随机生成视频索引
+      var video = document.getElementById("my-video");
+      video.innerHTML = ""; // 清空视频元素
+
+      var source = document.createElement("source");
+      source.setAttribute("src", videoList[videoIndex].src);
+      source.setAttribute("type", videoList[videoIndex].type);
+      video.appendChild(source);
+      video.load(); // 加载新视频
+      video.play(); // 播放新视频
+    }
+    
+    // 开始倒计时
+    function startCountdown() {
+      var countdownText = document.getElementById("countdown-text");
+      var countdownTime = new Date("2024-05-29T01:53:00"); // 指定倒计时的日期和时间
+      var currentTime = new Date(); // 当前时间
+
+      if (currentTime < countdownTime) {
+        var timeLeft = countdownTime - currentTime; // 剩余时间（毫秒）
+        var days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+        var hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+        countdownText.innerHTML = "距离指定时间还有：" + days + "天 " + hours + "小时 " + minutes + "分钟 " + seconds + "秒";
+        setTimeout(startCountdown, 1000); // 每秒更新倒计时文本
+
+      } else {
+        document.getElementById("video-container").style.display = "block"; // 显示视频容器
+        playRandomVideo(); // 开始随机播放视频
+       document.getElementById("countdown-text").style.display = "none";
+     document.getElementById("description-text").style.display = "none";
+      }
+    }
+
+    // 页面加载完成后开始倒计时
+    window.onload = function() {
+      startCountdown();
+    }
+  </script>
 </body>
 </html>
