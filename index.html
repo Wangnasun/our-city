@@ -1,19 +1,23 @@
+
 <!DOCTYPE html>
 <html>
 <head>
-  <title>one minute city</title>
+  <title>视频播放</title>
 <style>
 * {
   box-sizing: border-box;
+
 }
 
 body {
+text-align: center
   margin: 0;
   font-family: Arial;
   font-size: 17px;
 }
 
 #myVideo {
+text-align: center
   position: fixed;
   right: 0;
   bottom: 0;
@@ -21,22 +25,40 @@ body {
   min-height: 100%;
 }
 
-#myBtn:hover {
-  background: #ddd;
-  color: black;
+.video-container {
+      position: relative;
+      height: 100vh; /* 使容器占据全屏高度 */
+      background-color: #f0f0f0; /* 背景色，仅用于演示 */
+    }
+    video {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      max-width: 100%; /* 防止图片超出容器宽度 */
+      height: auto; /* 维持图片的宽高比 */
+    }
+
+.content {
+  position: fixed;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  color: #f1f1f1;
+  width: 100%;
+  padding: 20px;
+}
+
+    body{background-image: url(%E6%B5%B7%E6%8A%A5%E9%85%B1%EF%BC%88%E6%97%A0%E5%AD%97%E7%89%88.png)}
+
 }
 </style>
 </head>
+
 <body>
+
+
  <div id="video-container" style="display: none;">
     <video autoplay id="my-video" ></video>
-  </div>
-  <div id="countdown-container">
-      <p id="countdown-text"></p>
-</head>
-<body>
- <div id="video-container" style="display: none;">
-    <video id="my-video" controls></video>
   </div>
   <div id="countdown-container">
       <p id="countdown-text"></p>
@@ -52,6 +74,8 @@ Hi citizen!<br>
 <br>During the playback, it is encouraged to show the movie in your hand to other participants. At the same time, you can watch other people show their films and experience the full program. 
 <br>感谢你对这座城市运行的参与！
 <br>Thank you for participating in the running of this city!</p>
+
+
     </div>
   
   <script>
@@ -91,6 +115,7 @@ Hi citizen!<br>
       var videoIndex = Math.floor(Math.random() * videoList.length); // 随机生成视频索引
       var video = document.getElementById("my-video");
       video.innerHTML = ""; // 清空视频元素
+
       var source = document.createElement("source");
       source.setAttribute("src", videoList[videoIndex].src);
       source.setAttribute("type", videoList[videoIndex].type);
@@ -102,9 +127,7 @@ Hi citizen!<br>
     // 开始倒计时
     function startCountdown() {
       var countdownText = document.getElementById("countdown-text");
-
-      var countdownTime = new Date("2024-05-29T21:20:00"); // 指定倒计时的日期和时间
-//改这里改这里！！！！！！！！！！
+      var countdownTime = new Date("2024-05-30T06:27:00"); // 指定倒计时的日期和时间
       var currentTime = new Date(); // 当前时间
 
       if (currentTime < countdownTime) {
@@ -113,8 +136,10 @@ Hi citizen!<br>
         var hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         var minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
         var seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
-        countdownText.innerHTML = "距离指定时间还有：" + days + "天 " + hours + "小时 " + minutes + "分钟 " + seconds + "秒";
+
+        countdownText.innerHTML = "距离开始时间还有：" + days + "天 " + hours + "小时 " + minutes + "分钟 " + seconds + "秒";
         setTimeout(startCountdown, 1000); // 每秒更新倒计时文本
+
       } else {
         document.getElementById("video-container").style.display = "block"; // 显示视频容器
         playRandomVideo(); // 开始随机播放视频
@@ -123,6 +148,7 @@ var btn = document.getElementById("myBtn");
      document.getElementById("description-text").style.display = "none";
       }
     }
+
     // 页面加载完成后开始倒计时
     window.onload = function() {
       startCountdown();
