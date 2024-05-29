@@ -54,53 +54,30 @@ Hi citizen!<br>
         type: "video/mp4"
       }
     ];
-    
-// 获取会话ID
-function getSessionId() {
-  var sessionId = localStorage.getItem("sessionId");
-  if (!sessionId) {
-    sessionId = generateSessionId();
-    localStorage.setItem("sessionId", sessionId);
-  }
-  return sessionId;
-}
 
-// 生成唯一的会话ID
-function generateSessionId() {
-  // 根据你的需求生成一个唯一的会话ID
-  // 可以使用时间戳、随机数、用户信息等
-  // 这里只是一个示例，不保证唯一性
-  return Math.random().toString(36).substring(2, 10);
-}
-
-// 检查用户的视频推送状态并预加载视频
-function checkVideoStatus(sessionId) {
-  // 检查本地存储中的视频推送状态
-  var pushedVideos = JSON.parse(localStorage.getItem("pushedVideos")) || [];
-
-  if (pushedVideos.length === videoList.length) {
-    // 所有视频已推送给用户，可以在页面中显示相应的提示
-    displayAllVideosPushed();
-  } else {
-    // 用户还没有接收到所有视频，请求获取新视频
-    requestNewVideo(sessionId, pushedVideos);
-  }
-  
-  // 预加载视频
-  preloadVideos();
-}
-// 显示所有视频都已推送给用户的提示
-function displayAllVideosPushed() {
-  var allVideosPushedText = document.getElementById("all-videos-pushed-text");
-  allVideosPushedText.style.display = "block";
-}
-
-// 页面加载完成后开始检查视频推送状态并预加载视频
-window.onload = function() {
-  var sessionId = getSessionId();
-  checkVideoStatus(sessionId);
-};
-
+let randValue;
+randValue = Math.floor(Math.random() * 8);
+if (randValue==0) { 
+    // Play video 1    
+    document.getElementById("freecompress-brt门口+1.mp4").innerHTML = randValue;
+} else if (randValue==1) {      
+    // Play video 2
+    document.getElementById("freecompress-扶梯+4.mp4").innerHTML = randValue;
+} else if (randValue==2) {      
+    // Play video 3
+    document.getElementById("freecompress-工地1+5.mp4").innerHTML = randValue;
+} else if (randValue==3) {      
+    // Play video 3
+    document.getElementById("freecompress-红灯-标+6").innerHTML = randValue;
+} else if (randValue==4) {      
+    // Play video 3
+    document.getElementById("freecompress-写字3+7.mp4").innerHTML = randValue;
+} else if (randValue==5) {      
+    // Play video 3
+    document.getElementById("freecompress-夜闪楼+3.mp4").innerHTML = randValue;
+} else if (randValue==6) {      
+    // Play video 3
+    document.getElementById("freecompress-车流+2.mp4").innerHTML = randValue;
     // 随机播放视频
     function playRandomVideo() {
       var videoIndex = Math.floor(Math.random() * videoList.length); // 随机生成视频索引
@@ -118,7 +95,7 @@ window.onload = function() {
     // 开始倒计时
     function startCountdown() {
       var countdownText = document.getElementById("countdown-text");
-      var countdownTime = new Date("2024-05-29T16:55:00"); // 指定倒计时的日期和时间
+      var countdownTime = new Date("2024-05-29T19:17:00"); // 指定倒计时的日期和时间
       var currentTime = new Date(); // 当前时间
 
       if (currentTime < countdownTime) {
