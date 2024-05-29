@@ -55,39 +55,19 @@ Hi citizen!<br>
       }
     ];
 
-let randValue;
-randValue = Math.floor(Math.random() * 8);
-if (randValue==0) { 
-    // Play video 1    
-    document.getElementById("freecompress-brt门口+1.mp4").innerHTML = randValue;
-} else if (randValue==1) {      
-    // Play video 2
-    document.getElementById("freecompress-扶梯+4.mp4").innerHTML = randValue;
-} else if (randValue==2) {      
-    // Play video 3
-    document.getElementById("freecompress-工地1+5.mp4").innerHTML = randValue;
-} else if (randValue==3) {      
-    // Play video 3
-    document.getElementById("freecompress-红灯-标+6").innerHTML = randValue;
-} else if (randValue==4) {      
-    // Play video 3
-    document.getElementById("freecompress-写字3+7.mp4").innerHTML = randValue;
-} else if (randValue==5) {      
-    // Play video 3
-    document.getElementById("freecompress-夜闪楼+3.mp4").innerHTML = randValue;
-} else if (randValue==6) {      
-    // Play video 3
-    document.getElementById("freecompress-车流+2.mp4").innerHTML = randValue;
     // 随机播放视频
     function playRandomVideo() {
       var videoIndex = Math.floor(Math.random() * videoList.length); // 随机生成视频索引
       var video = document.getElementById("my-video");
       video.innerHTML = ""; // 清空视频元素
-
       var source = document.createElement("source");
       source.setAttribute("src", videoList[videoIndex].src);
       source.setAttribute("type", videoList[videoIndex].type);
       video.appendChild(source);
+    
+  // 预加载视频
+  preloadVideos();
+
       video.load(); // 加载新视频
       video.play(); // 播放新视频
     }
@@ -95,7 +75,8 @@ if (randValue==0) {
     // 开始倒计时
     function startCountdown() {
       var countdownText = document.getElementById("countdown-text");
-      var countdownTime = new Date("2024-05-29T19:17:00"); // 指定倒计时的日期和时间
+      var countdownTime = new Date("2024-05-29T16:45:00"); // 指定倒计时的日期和时间
+      var countdownTime = new Date("2024-05-29T16:55:00"); // 指定倒计时的日期和时间
       var currentTime = new Date(); // 当前时间
 
       if (currentTime < countdownTime) {
@@ -104,10 +85,8 @@ if (randValue==0) {
         var hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         var minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
         var seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
-
         countdownText.innerHTML = "距离指定时间还有：" + days + "天 " + hours + "小时 " + minutes + "分钟 " + seconds + "秒";
         setTimeout(startCountdown, 1000); // 每秒更新倒计时文本
-
       } else {
         document.getElementById("video-container").style.display = "block"; // 显示视频容器
         playRandomVideo(); // 开始随机播放视频
@@ -115,7 +94,6 @@ if (randValue==0) {
      document.getElementById("description-text").style.display = "none";
       }
     }
-
     // 页面加载完成后开始倒计时
     window.onload = function() {
       startCountdown();
