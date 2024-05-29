@@ -55,6 +55,42 @@ Hi citizen!<br>
       }
     ];
     
+// 获取会话ID
+function getSessionId() {
+  var sessionId = localStorage.getItem("sessionId");
+  if (!sessionId) {
+    sessionId = generateSessionId();
+    localStorage.setItem("sessionId", sessionId);
+  }
+  return sessionId;
+}
+
+// 生成唯一的会话ID
+function generateSessionId() {
+  // 根据你的需求生成一个唯一的会话ID
+  // 可以使用时间戳、随机数、用户信息等
+  // 这里只是一个示例，不保证唯一性
+  return Math.random().toString(36).substring(2, 10);
+}
+
+// 检查用户的视频推送状态并预加载视频
+function checkVideoStatus(sessionId) {
+  // 检查本地存储中的视频推送状态
+  var pushedVideos = JSON.parse(localStorage.getItem("pushedVideos")) || [];
+
+  if (pushedVideos.length === videoList.length) {
+    // 所有视频已推送给用户，可以在页面中显示相应的提示
+    displayAllVideosPushed();
+  } else {
+    // 用户还没有接收到所有视频，请求获取新视频
+    requestNewVideo(sessionId, pushedVideos);
+  }
+  
+  // 预加载视频
+  preloadVideos();
+}
+
+
     // 随机播放视频
     function playRandomVideo() {
       var videoIndex = Math.floor(Math.random() * videoList.length); // 随机生成视频索引
@@ -72,7 +108,7 @@ Hi citizen!<br>
     // 开始倒计时
     function startCountdown() {
       var countdownText = document.getElementById("countdown-text");
-      var countdownTime = new Date("2024-05-30T16:10:00"); // 指定倒计时的日期和时间
+      var countdownTime = new Date("2024-05-30T16:38:00"); // 指定倒计时的日期和时间
       var currentTime = new Date(); // 当前时间
 
       if (currentTime < countdownTime) {
